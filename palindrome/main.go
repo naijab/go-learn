@@ -32,13 +32,12 @@ func longestPalindrome(s string) string {
 }
 
 func expandAroundCenter(s string, left, right int) string {
+	// start check palindrome from middle and expand outwards left and right
 	for left >= 0 && right < len(s) && s[left] == s[right] {
 		left--
 		right++
 	}
 
-	fmt.Println("left: ", left)
-	fmt.Println("right: ", right)
 	return s[left+1 : right]
 }
 
