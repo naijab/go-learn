@@ -16,28 +16,24 @@ func main() {
 
 func findLongestSubString(s string) string {
 	n := len(s)
+	charIndex := make(map[byte]int)
+	start := 0
 	maxLen := 0
 	startIndex := 0
 
-	for i := 0; i < n; i++ {
-		vis := make(map[byte]bool)
-		for j := i; j < n; j++ {
-			// check duplicate
-			if vis[s[j]] {
-				break
-			}
-			vis[s[j]] = true
+	for end := 0; end < n; end++ {
+		ch := s[end]
 
-			// Now:
-			// Start index: i = 2
-			// End index: j = 4
-			// Length of "cde" = 4 - 2 + 1 = 3
+		// If the character is repeated, move start
+		if idx, found := charIndex[ch]; found && idx >= start {
+			start = idx + 1
+		}
 
-			// check  max length
-			if j-i+1 > maxLen {
-				maxLen = j - i + 1
-				startIndex = i
-			}
+		charIndex[ch] = end
+
+		if end-start+1 > maxLen {
+			maxLen = end - start + 1
+			startIndex = start
 		}
 	}
 
